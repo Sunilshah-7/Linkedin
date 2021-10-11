@@ -13,6 +13,20 @@ function Login() {
 
   const loginToApp = (e) => {
     e.preventDefault();
+
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .then((userAuth) => {
+        dispatch(
+          login({
+            email: userAuth.user.email,
+            uid: userAuth.user.uid,
+            displayName: userAuth.user.displayName,
+            profileUrl: userAuth.user.photoURL,
+          })
+        );
+      })
+      .catch((error) => alert(error));
   };
   const register = () => {
     if (!name) {
@@ -22,21 +36,20 @@ function Login() {
     auth
       .createUserWithEmailAndPassword(email, password)
       .then((userAuth) => {
-        userAuth.user
-          .updateProfile({
+        userAuth.user.updateProfile({
+          displayName: name,
+          photoURL: profilePic,
+        });
+      })
+      .then((userAuth) => {
+        dispatch(
+          login({
+            email: userAuth.user.email,
+            uid: userAuth.user.uid,
             displayName: name,
-            photoURL: profilePic,
+            photoUrl: profilePic,
           })
-          .then(() => {
-            dispatch(
-              login({
-                email: userAuth.user.email,
-                uid: userAuth.user.uid,
-                displayName: name,
-                photoUrl: profilePic,
-              })
-            );
-          });
+        );
       })
       .catch((error) => alert(error));
   };
@@ -76,7 +89,7 @@ function Login() {
           type="password"
         />
 
-        <button type="submit" onClick>
+        <button type="submit" onClick={loginToApp}>
           Sign In
         </button>
       </form>

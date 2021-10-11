@@ -29,11 +29,13 @@ function App() {
       }
     });
   }, []);
+
+  console.log("User status:", user);
   return (
     <div className="app">
       <Header />
 
-      {!user ? (
+      {!user.user ? (
         <Login />
       ) : (
         <div className="app__body">
