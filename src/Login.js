@@ -11,6 +11,7 @@ function Login() {
   const [profilePic, setProfilePic] = useState("");
   const dispatch = useDispatch();
 
+  console.log("displayName:", name, " and profilepic is: ", profilePic);
   const loginToApp = (e) => {
     e.preventDefault();
 
@@ -36,20 +37,22 @@ function Login() {
     auth
       .createUserWithEmailAndPassword(email, password)
       .then((userAuth) => {
-        userAuth.user.updateProfile({
-          displayName: name,
-          photoURL: profilePic,
-        });
-      })
-      .then((userAuth) => {
-        dispatch(
-          login({
-            email: userAuth.user.email,
-            uid: userAuth.user.uid,
+        userAuth.user
+          .updateProfile({
             displayName: name,
-            photoUrl: profilePic,
+            photoURL: profilePic,
           })
-        );
+          .then(() => {
+            dispatch(
+              login({
+                email: userAuth.user.email,
+                uid: userAuth.user.uid,
+                displayName: name,
+                photoUrl: profilePic,
+              })
+            );
+          })
+          .catch((error) => alert(error));
       })
       .catch((error) => alert(error));
   };

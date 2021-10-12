@@ -17,6 +17,7 @@ function Feed() {
   const user = useSelector(selectUser);
   const [posts, setPosts] = useState([]);
   const [input, setInput] = useState("");
+
   useEffect(() => {
     db.collection("posts")
       .orderBy("timestamp", "desc")

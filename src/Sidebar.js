@@ -21,7 +21,7 @@ function Sidebar() {
           src="https://www.wallpaperup.com/uploads/wallpapers/2016/09/03/1014964/63b86661345e13b430af6acc1442634f-700.jpg"
           alt=""
         />
-        <Avatar src={user.photoUrl} className="sidebar__avatar">
+        <Avatar src={user.user.photoUrl} className="sidebar__avatar">
           {user.user.email[0]}
         </Avatar>
         <h2>{user.user.displayName}</h2>
